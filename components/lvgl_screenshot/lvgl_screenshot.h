@@ -28,9 +28,13 @@ class LvglScreenshot : public Component {
   SemaphoreHandle_t capture_requested_{nullptr};
   SemaphoreHandle_t capture_done_{nullptr};
 
-  // BMP output buffer in PSRAM
-  uint8_t *bmp_buf_{nullptr};
-  size_t bmp_size_{0};
+  // Intermediate RGB888 buffer (stb input) — allocated in PSRAM
+  uint8_t *rgb_buf_{nullptr};
+
+  // JPEG output buffer — allocated in PSRAM
+  uint8_t *jpeg_buf_{nullptr};
+  size_t jpeg_capacity_{0};
+  size_t jpeg_size_{0};
 
   // True while a capture is in flight (guards against concurrent requests)
   volatile bool in_progress_{false};
@@ -39,8 +43,8 @@ class LvglScreenshot : public Component {
   void do_capture_();
 
   static esp_err_t handle_screenshot_(httpd_req_t *req);
+  static void jpeg_write_cb_(void *ctx, void *data, int size);
 
-  // Singleton pointer so the static HTTP handler can reach the instance
   static LvglScreenshot *instance_;
 };
 
