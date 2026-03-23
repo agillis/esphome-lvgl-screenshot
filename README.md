@@ -55,6 +55,23 @@ http://<device-ip>:8080/screenshot
 
 The response is a **PNG image** of whatever is currently on screen.
 
+## Why?
+
+If you're building LVGL display UIs on ESPHome, the dev cycle is painful: edit YAML,
+compile, upload, walk over, squint at a small screen, walk back, repeat. This
+component lets you see what's on screen from anywhere -- just open a URL in your
+browser.
+
+With these screenshots you can:
+
+- **Let your coding agent close the loop.** After every LVGL layout change, Claude Code / Codex / Gemini / your coding agent of choice can `curl` a screenshot, view the PNG, and verify the layout looks right -- without you ever looking at the device. This is the use case that prompted the component: AI-assisted LVGL development where the agent can check its own work.
+- **Iterate on LVGL layouts with the SDL host.** Run ESPHome on your desktop with the SDL display backend, and preview screenshots in-browser without needing real hardware. Perfect for rapid LVGL widget and style iteration.
+- **Monitor ESPHome devices remotely.** Expose the endpoint through ngrok or a Cloudflare tunnel and see what your device is displaying from anywhere. Useful for devices mounted on walls, inside enclosures, or at a different site entirely.
+- **Integrate with Home Assistant.** Fire a webhook that fetches the screenshot and posts it to a notification, Lovelace card, or Telegram bot. "What does the controller screen say right now?" -- answered without leaving the couch.
+- **Auto-generate documentation.** Script a capture and dump screenshots into a docs folder. Re-run after every UI change and your docs stay current.
+- **Run visual regression tests.** Capture baseline screenshots, make changes, capture again, diff. Catch LVGL layout breakage before it ships.
+- **Debug remotely.** "The display looks wrong" -- now you can see exactly what they see without asking them to photograph their screen.
+
 ## How it works
 
 1. An HTTP GET to `/screenshot` signals the ESPHome main loop (via a FreeRTOS semaphore on ESP-IDF, or a pthread condition variable on Host).
