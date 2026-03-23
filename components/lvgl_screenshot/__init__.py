@@ -1,4 +1,4 @@
-"""LVGL Screenshot Component - serves a BMP snapshot of the LVGL framebuffer via HTTP."""
+"""LVGL Screenshot Component - serves a PNG screenshot of the LVGL framebuffer via HTTP."""
 
 import esphome.codegen as cg
 import esphome.config_validation as cv
