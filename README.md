@@ -96,3 +96,7 @@ All LVGL buffer access happens on the ESPHome main task, keeping it thread-safe.
 ## Inspired by
 
 [ay129-35MR/esphome-display-screenshot](https://github.com/ay129-35MR/esphome-display-screenshot) — adapted for LVGL framebuffer access and ESP-IDF native HTTP server.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
